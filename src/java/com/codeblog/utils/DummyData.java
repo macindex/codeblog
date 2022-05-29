@@ -4,19 +4,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-//import javax.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.codeblog.model.Post;
 import com.codeblog.repository.CodeblogRepository;
 
+@Component
 public class DummyData {
 
 	@Autowired
 	CodeblogRepository codeblogRepository;
 	
-	//@PostConstruct
+	@PostConstruct
 	public void savePosts() {
 		
 		List<Post> postList = new ArrayList<>();
