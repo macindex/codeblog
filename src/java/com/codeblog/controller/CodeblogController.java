@@ -19,41 +19,43 @@ import com.codeblog.service.CodeblogService;
 
 @Controller
 public class CodeblogController {
-	
+
 	@Autowired
 	CodeblogService codeblogService;
-	
+
 	@RequestMapping(value = "/posts", method = RequestMethod.GET)
 	public ModelAndView getPosts() {
 		ModelAndView mv = new ModelAndView("posts");
 		List<Post> posts = codeblogService.findAll();
 		mv.addObject("posts", posts);
 		return mv;
-		
+
 	}
+
 	@RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
 	public ModelAndView getPostsDetails(@PathVariable("id") long id) {
-		//String viewName;
+		// String viewName;
 		ModelAndView mv = new ModelAndView("PostDetails");
 		Post post = codeblogService.findById(id);
-		//String attributeName;
+		// String attributeName;
 		mv.addObject("post", post);
 		return mv;
-		
+
 	}
-	
+
 	@RequestMapping(value = "/newpost", method = RequestMethod.GET)
 	public String getPostForm() {
-		return "postForm";
+		return "PostForm";
 	}
-	@RequestMapping(value = "/newpost", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/newpost", method = RequestMethod.POST)
 	public String savePost(@Valid Post post, BindingResult result, RedirectAttributes attributes) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return "redirect:/newpost";
 		}
 		post.setData(LocalDate.now());
 		codeblogService.save(post);
 		return "redirect:/newpost";
 	}
-	
+
 }
